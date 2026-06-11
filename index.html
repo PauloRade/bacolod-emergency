@@ -101,6 +101,27 @@
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
           loadingBar.style.display = "none";
+
+
+          // === PWA AUDIO AUTOPLAY FIX ===
+          const resumeAudio = () => {
+            if (unityInstance.Module && unityInstance.Module.audioContext) {
+              if (unityInstance.Module.audioContext.state === 'suspended') {
+                unityInstance.Module.audioContext.resume().then(() => {
+                  console.log('PWA Audio successfully unlocked by user gesture!');
+                  // Clean up the listeners so they don't run on every single click
+                  window.removeEventListener('click', resumeAudio);
+                  window.removeEventListener('touchend', resumeAudio);
+                });
+              }
+            }
+          };
+
+          // Listen for the user's very first click (PC) or tap (Mobile) inside the PWA
+          window.addEventListener('click', resumeAudio);
+          window.addEventListener('touchend', resumeAudio);
+          // ==============================
+          
         }).catch((message) => {
           alert(message);
         });
