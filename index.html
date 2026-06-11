@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | bacolod-project-frontend</title>
+    <title>bacolod-project-frontend</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="manifest" href="manifest.webmanifest">
@@ -57,12 +57,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/9de01091c2481a6e5e835d0e6fdd67ab.loader.js";
+      var loaderUrl = buildUrl + "/a60c7858ef9d3bad25967f6630bafd4b.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/861f6bf8c47859428258a1ae2a4fcf88.data.unityweb",
-        frameworkUrl: buildUrl + "/917b6f3fce50b30ffe456495a03d8024.framework.js.unityweb",
-        codeUrl: buildUrl + "/33c505038b59194fe7e2ed314aa59a01.wasm.unityweb",
+        dataUrl: buildUrl + "/0456429d0f71e4b0895ccc29b198ea17.data.unityweb",
+        frameworkUrl: buildUrl + "/14dd1d096dcd423b7e17735a946a7929.framework.js.unityweb",
+        codeUrl: buildUrl + "/397630211b70fa4c515422e271cbf795.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "bacolod-project-frontend",
@@ -101,27 +101,6 @@
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
           loadingBar.style.display = "none";
-
-
-          // === PWA AUDIO AUTOPLAY FIX ===
-          const resumeAudio = () => {
-            if (unityInstance.Module && unityInstance.Module.audioContext) {
-              if (unityInstance.Module.audioContext.state === 'suspended') {
-                unityInstance.Module.audioContext.resume().then(() => {
-                  console.log('PWA Audio successfully unlocked by user gesture!');
-                  // Clean up the listeners so they don't run on every single click
-                  window.removeEventListener('click', resumeAudio);
-                  window.removeEventListener('touchend', resumeAudio);
-                });
-              }
-            }
-          };
-
-          // Listen for the user's very first click (PC) or tap (Mobile) inside the PWA
-          window.addEventListener('click', resumeAudio);
-          window.addEventListener('touchend', resumeAudio);
-          // ==============================
-          
         }).catch((message) => {
           alert(message);
         });
